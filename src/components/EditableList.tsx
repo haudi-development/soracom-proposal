@@ -8,23 +8,29 @@ interface EditableListProps {
   onSave: (items: string[]) => Promise<boolean>
   className?: string
   renderItem?: (item: string, index: number) => React.ReactNode
+  defaultItems?: string[]
 }
 
 export default function EditableList({ 
   items, 
   onSave, 
   className = '',
-  renderItem 
+  renderItem,
+  defaultItems = []
 }: EditableListProps) {
   const { isAdmin } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
-  const [editItems, setEditItems] = useState(items)
+  
+  // デフォルトアイテムを使用する場合はitems配列が空でもデフォルトを表示
+  const displayItems = items.length === 0 && defaultItems.length > 0 ? defaultItems : items
+  
+  const [editItems, setEditItems] = useState(displayItems)
   const [saving, setSaving] = useState(false)
 
   if (!isAdmin) {
     return (
       <div className={className}>
-        {items.map((item, index) => 
+        {displayItems.map((item, index) => 
           renderItem ? renderItem(item, index) : (
             <div key={index} className="flex items-start space-x-3">
               <div className="w-2 h-2 bg-[#50A69F] rounded-full mt-2 flex-shrink-0"></div>
@@ -47,7 +53,7 @@ export default function EditableList({
   }
 
   const handleCancel = () => {
-    setEditItems(items)
+    setEditItems(displayItems)
     setIsEditing(false)
   }
 
@@ -122,7 +128,7 @@ export default function EditableList({
   return (
     <div className="group relative">
       <div className={className}>
-        {items.map((item, index) => 
+        {displayItems.map((item, index) => 
           renderItem ? renderItem(item, index) : (
             <div key={index} className="flex items-start space-x-3">
               <div className="w-2 h-2 bg-[#50A69F] rounded-full mt-2 flex-shrink-0"></div>

@@ -47,7 +47,7 @@ export async function GET() {
 }
 
 // メモリストレージ（Supabaseが設定されていない場合の代替）
-let memoryContent: Record<string, string> = {}
+const memoryContent: Record<string, string> = {}
 
 export async function PUT(request: NextRequest) {
   try {
