@@ -142,7 +142,7 @@ export default function MainContent() {
                         ]}
                         renderItem={(item, index) => {
                           const [company, description, color] = item.split('|');
-                          const colorMap = { blue: 'bg-blue-500', red: 'bg-red-500', green: 'bg-green-500' };
+                          const colorMap: Record<string, string> = { blue: 'bg-blue-500', red: 'bg-red-500', green: 'bg-green-500' };
                           return (
                             <div key={index} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
                               <div className="flex items-center space-x-3">
@@ -175,7 +175,7 @@ export default function MainContent() {
                         ]}
                         renderItem={(item, index) => {
                           const [title, description, color, span] = item.split('|');
-                          const colorMap = { 
+                          const colorMap: Record<string, string> = { 
                             purple: 'from-purple-50 to-purple-100 border-purple-200',
                             blue: 'from-blue-50 to-blue-100 border-blue-200',
                             green: 'from-green-50 to-green-100 border-green-200'
